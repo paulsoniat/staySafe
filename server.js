@@ -27,11 +27,9 @@ app.post('/user', (req, res) => {
   dbHelpers.createUser(req, res)
 })
 
-app.get('/allUsers', (req, res) => {
-  dbHelpers.findAllUsers()
-  .then((response) => {
-    res.send(response)
-  })
+app.get('/allUsers', async (req, res) => {
+  let userData = await dbHelpers.findAllUsers()
+  res.send(userData)
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

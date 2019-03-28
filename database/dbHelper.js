@@ -21,13 +21,14 @@ module.exports = {
       })
       .then(console.log("createdd"))
     },
-    findAllUsers: function findAllUsers(req, res) {
-      models.User.findAll()
-      .then((users) => {
-        return users.map((user) => {
-          console.log("in user map")
-          return user;
-        });
-      });
+    findAllUsers: async function findAllUsers(req, res) {
+      const allUsers = await models.User.findAll()
+          let userNames = allUsers.map((user) => {
+            return {
+              firstName: user.firstName,
+              lastName: user.lastName
+            }
+          })
+        return userNames
     }
 }
