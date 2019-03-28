@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       value: '',
       response: '',
-      users: []
+      users: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,16 +22,15 @@ class App extends Component {
 
   componentDidMount() {
     this.callApi()
-      .then(response => console.log(response))
-      .then(res => this.setState({ response: res.express }))
-      .then(console.log(this.state.response))
-      .catch(err => console.log(err));
   }
 
   callApi = async () => {
     axios.get('/allUsers')
-    .then(function (response) {
-      console.log(response, response.data);
+    //.then(res => {console.log(res)})
+    .then(res => {
+      console.log(res.data)
+      console.log(this.state.users)
+      this.setState({users: res.data})
     })
   };
 
@@ -55,12 +54,12 @@ class App extends Component {
 
 
   render() {
-    if(this.state.users.length) {
+    if(this.state.users.length > 1) {
       return (
         <div className="App"> 
-        {this.state.response.map(user =>
+        {this.state.users.map(user =>
                 (<div>
-                  {user[0]}
+                  {`${user.firstName }` + " " + `${user.lastName}`}
                   </div>))}
         </div>
       );
